@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,8 +13,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import id.oratakashi.training.R;
 import id.oratakashi.training.Sessions;
+import id.oratakashi.training.data.model.student.ResponseStudent;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainInterface.View {
 
     Unbinder unbinder;
 
@@ -32,6 +34,26 @@ public class MainActivity extends AppCompatActivity {
                 "Email : "+
                 Sessions.getInstance(getApplicationContext()).getString(Sessions.email)
         );
+    }
+
+    @Override
+    public void onLoadingStudent(boolean loading) {
+        
+    }
+
+    @Override
+    public void onResultStudent(ResponseStudent response) {
+
+    }
+
+    @Override
+    public void onErrorStudent() {
+        Toast.makeText(this, "Gagal mengambil data", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @OnClick(R.id.btnLogout) void onLogout(){
