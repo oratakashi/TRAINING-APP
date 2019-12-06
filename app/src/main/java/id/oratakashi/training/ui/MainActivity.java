@@ -1,6 +1,9 @@
 package id.oratakashi.training.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import id.oratakashi.training.data.model.student.ResponseStudent;
 public class MainActivity extends AppCompatActivity implements MainInterface.View {
 
     Unbinder unbinder;
+    MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,16 +38,28 @@ public class MainActivity extends AppCompatActivity implements MainInterface.Vie
                 "Email : "+
                 Sessions.getInstance(getApplicationContext()).getString(Sessions.email)
         );
+
+        presenter = new MainPresenter(this);
+
+        presenter.getStudent();
+
+        srMain.setDistanceToTriggerSync(220);
+        srMain.setOnRefreshListener(() -> presenter.getStudent());
     }
 
     @Override
     public void onLoadingStudent(boolean loading) {
-        
+        if(loading){
+            srMain.setRefreshing(true);
+        }else{
+            srMain.setRefreshing(false);
+        }
     }
 
     @Override
     public void onResultStudent(ResponseStudent response) {
-
+        rvMain.setLayoutManager(new LinearLayoutManager(this));
+        rvMain.setAdapter(new MainAdapter(this, response.getData()));
     }
 
     @Override
@@ -66,4 +82,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface.Vie
     TextView tvName;
     @BindView(R.id.tvEmail)
     TextView tvEmail;
+    @BindView(R.id.rvMain)
+    RecyclerView rvMain;
+    @BindView(R.id.srMain)
+    SwipeRefreshLayout srMain;
 }

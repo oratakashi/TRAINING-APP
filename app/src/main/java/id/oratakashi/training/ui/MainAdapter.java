@@ -41,7 +41,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvName.setText(data.get(position).getName());
         holder.tvNIM.setText(data.get(position).getNim());
-        ImageHelper.getImage(holder.ivPhoto, data.get(position).getImage());
+        ImageHelper.getImage(
+                holder.ivPhoto,
+                data.get(position).getImage().replace("https", "http"));
     }
 
     @Override
