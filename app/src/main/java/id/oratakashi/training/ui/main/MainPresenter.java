@@ -1,9 +1,9 @@
-package id.oratakashi.training.ui;
+package id.oratakashi.training.ui.main;
 
 import id.oratakashi.training.data.model.student.ResponseStudent;
+import id.oratakashi.training.data.model.student.delete.ResponseDelete;
 import id.oratakashi.training.data.network.Api;
 import id.oratakashi.training.data.network.ApiEndpoint;
-import io.reactivex.Scheduler;
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -40,6 +40,33 @@ public class MainPresenter implements MainInterface.Presenter {
                     @Override
                     public void onError(Throwable e) {
                         view.onErrorStudent();
+                        view.showMessage(e.getMessage());
+                    }
+                });
+    }
+
+    @Override
+    public void deleteStudent(String nim) {
+        view.onLoadingDelete(true);
+        endpoint.deleteStudent(nim)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<ResponseDelete>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(ResponseDelete responseDelete) {
+                        view.onLoadingDelete(false);
+                        view.onResultDelete(responseDelete);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        view.onErrorDelete();
+                        view.onLoadingDelete(false);
                         view.showMessage(e.getMessage());
                     }
                 });

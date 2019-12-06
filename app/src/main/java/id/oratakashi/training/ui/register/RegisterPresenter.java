@@ -1,6 +1,6 @@
-package id.oratakashi.training.ui;
+package id.oratakashi.training.ui.register;
 
-import id.oratakashi.training.data.model.login.ResponseLogin;
+import id.oratakashi.training.data.model.register.ResponseRegister;
 import id.oratakashi.training.data.network.Api;
 import id.oratakashi.training.data.network.ApiEndpoint;
 import io.reactivex.SingleObserver;
@@ -8,37 +8,37 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class LoginPresenter implements LoginInterface.Presenter {
+public class RegisterPresenter implements RegisterInterface.Presenter{
 
-    LoginInterface.View view;
+    RegisterInterface.View view;
     ApiEndpoint endpoint;
 
-    public LoginPresenter(LoginInterface.View view) {
+    public RegisterPresenter(RegisterInterface.View view) {
         this.view = view;
         endpoint = Api.getUrl().create(ApiEndpoint.class);
     }
 
     @Override
-    public void postLogin(String email, String password) {
-        view.onLoadingLogin(true);
-        endpoint.postLogin(email, password)
+    public void postRegister(String name, String email, String password) {
+        view.onLoadingRegister(true);
+        endpoint.postRegister(email, name, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new SingleObserver<ResponseLogin>() {
+                .subscribe(new SingleObserver<ResponseRegister>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onSuccess(ResponseLogin responseLogin) {
-                        view.onLoadingLogin(false);
-                        view.onResultLogin(responseLogin);
+                    public void onSuccess(ResponseRegister responseRegister) {
+                        view.onLoadingRegister(false);
+                        view.onResultRegister(responseRegister);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        view.onErrorLogin();
+                        view.onErrorRegister();
                         view.showMessage(e.getMessage());
                     }
                 });

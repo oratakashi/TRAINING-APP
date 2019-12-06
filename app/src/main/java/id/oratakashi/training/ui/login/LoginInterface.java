@@ -1,4 +1,4 @@
-package id.oratakashi.training.ui;
+package id.oratakashi.training.ui.login;
 
 import id.oratakashi.training.data.model.login.ResponseLogin;
 

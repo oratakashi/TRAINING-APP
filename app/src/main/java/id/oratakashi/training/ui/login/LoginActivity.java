@@ -1,10 +1,9 @@
-package id.oratakashi.training.ui;
+package id.oratakashi.training.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.se.omapi.Session;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,6 +15,8 @@ import butterknife.Unbinder;
 import id.oratakashi.training.Sessions;
 import id.oratakashi.training.data.model.login.DataStudent;
 import id.oratakashi.training.data.model.login.ResponseLogin;
+import id.oratakashi.training.ui.main.MainActivity;
+import id.oratakashi.training.ui.register.RegisterActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginInterface.View {
     

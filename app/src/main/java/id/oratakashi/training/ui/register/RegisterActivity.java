@@ -1,4 +1,4 @@
-package id.oratakashi.training.ui;
+package id.oratakashi.training.ui.register;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,7 @@ import butterknife.Unbinder;
 import id.oratakashi.training.R;
 import id.oratakashi.training.Sessions;
 import id.oratakashi.training.data.model.register.ResponseRegister;
+import id.oratakashi.training.ui.main.MainActivity;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterInterface.View {
 
@@ -24,6 +25,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        getSupportActionBar().setTitle("Buat akun baru");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         unbinder = ButterKnife.bind(this);
         presenter = new RegisterPresenter(this);
@@ -83,6 +87,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterInter
     @Override
     public String getPassword() {
         return etPassword.getText().toString();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     @BindView(R.id.etEmail)

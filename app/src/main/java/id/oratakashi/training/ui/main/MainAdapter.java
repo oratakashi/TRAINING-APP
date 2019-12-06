@@ -1,9 +1,10 @@
-package id.oratakashi.training.ui;
+package id.oratakashi.training.ui.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,10 +24,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     Context context;
     List<DataStudent> data;
+    MainInterface.View view;
 
-    public MainAdapter(Context context, List<DataStudent> data) {
+    public MainAdapter(Context context, List<DataStudent> data, MainInterface.View view) {
         this.context = context;
         this.data = data;
+        this.view = view;
     }
 
     @NonNull
@@ -44,6 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         ImageHelper.getImage(
                 holder.ivPhoto,
                 data.get(position).getImage().replace("https", "http"));
+        holder.btnDelete.setOnClickListener(v -> view.onDelete(data.get(position).getNim()));
     }
 
     @Override
@@ -60,6 +64,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         TextView tvName;
         @BindView(R.id.tvNIM)
         TextView tvNIM;
+        @BindView(R.id.btnDelete)
+        Button btnDelete;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
